@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"main/api"
-	"main/output-mapper"
+	outputMapper "main/output-mapper"
 )
 
 func main() {
@@ -18,13 +18,14 @@ func main() {
 		scanner.Scan()
 		input := strings.TrimSpace(scanner.Text())
 
-		if (input == "q!") {
+		if input == "q!" {
 			fmt.Println("Exiting...")
-			return;
+			return
 		}
 
 		fmt.Println("Fetching user activity for", input)
-		response, err := api.FetchUserActivity(input)
+		githubAPI := api.NewGithubAPI(nil)
+		response, err := githubAPI.FetchUserActivity(input)
 		if err != nil {
 			fmt.Println("Error fetching user activity:", err)
 			continue
